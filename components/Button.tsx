@@ -13,6 +13,7 @@ export const Button: React.FC<ButtonProps> = ({
   children, 
   ...props 
 }) => {
+  let baseStyles = "transition-all duration-300 font-nav uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed";
   let variantStyles = '';
   
   switch(variant) {
@@ -38,7 +39,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`font-nav uppercase tracking-wider transition-all duration-300 ${variantStyles} ${sizeStyles} ${className}`}
+      className={`${baseStyles} ${variantStyles} ${sizeStyles} ${className}`}
       {...props}
     >
       {children}

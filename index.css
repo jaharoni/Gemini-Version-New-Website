@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+}
+
+/* Custom scrollbar - Yellow on black */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-black;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-yellow-400 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-yellow-300;
+}
+
+/* Focus indicators */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba(255, 193, 7, 0.6);
+  outline-offset: 2px;
+}
+
+@layer components {
+  /* ========================================
+     GLASS MORPHISM SYSTEM - iOS Style
+     DO NOT MODIFY THESE VALUES
+     ======================================== */
+  
+  .glass {
+    @apply backdrop-blur-2xl border shadow-2xl;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(0, 0, 0, 0.15) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(32px) saturate(180%) contrast(1.1) brightness(1.05);
+    -webkit-backdrop-filter: blur(32px) saturate(180%) contrast(1.1) brightness(1.05);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-hover:hover {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(0, 0, 0, 0.2) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(40px) saturate(200%) contrast(1.15) brightness(1.08);
+    -webkit-backdrop-filter: blur(40px) saturate(200%) contrast(1.15) brightness(1.08);
+    box-shadow:
+      0 12px 48px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .glass-card {
+    @apply backdrop-blur-2xl border rounded-2xl shadow-2xl;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(0, 0, 0, 0.18) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(32px) saturate(180%) contrast(1.15) brightness(1.08);
+    -webkit-backdrop-filter: blur(32px) saturate(180%) contrast(1.15) brightness(1.08);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  .glass-button {
+    @apply backdrop-blur-xl border rounded-full shadow-lg;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(0, 0, 0, 0.15) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(24px) saturate(160%) contrast(1.1) brightness(1.05);
+    -webkit-backdrop-filter: blur(24px) saturate(160%) contrast(1.1) brightness(1.05);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-yellow {
+    @apply backdrop-blur-2xl border rounded-full shadow-lg;
+    background: linear-gradient(135deg,
+        rgba(255, 193, 7, 0.25) 0%,
+        rgba(255, 193, 7, 0.15) 50%,
+        rgba(0, 0, 0, 0.2) 100%);
+    border: 1px solid rgba(255, 193, 7, 0.4);
+    backdrop-filter: blur(24px) saturate(180%) contrast(1.1) brightness(1.08);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(1.1) brightness(1.08);
+    box-shadow:
+      0 4px 24px rgba(255, 193, 7, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  /* Text contrast for glass backgrounds */
+  .text-smart-contrast {
+    color: white;
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.95),
+      0 2px 4px rgba(0, 0, 0, 0.85),
+      0 3px 8px rgba(0, 0, 0, 0.7),
+      0 0 12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Typography classes */
+  .text-hero {
+    @apply font-display text-6xl md:text-8xl font-medium tracking-tight leading-none uppercase;
+  }
+
+  .text-section-title {
+    @apply font-display text-4xl md:text-5xl font-medium tracking-tight leading-tight uppercase;
+  }
+
+  .text-nav {
+    @apply font-nav font-medium tracking-wider uppercase text-sm;
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+  }
+
+  .text-body {
+    @apply font-body leading-relaxed;
+    line-height: 1.7;
+    letter-spacing: 0.015em;
+  }
+
+  /* Button styles */
+  .btn-large {
+    @apply glass-button text-white hover:bg-yellow-400/15 hover:border-yellow-400/40 hover:text-yellow-300 font-nav font-medium px-8 py-4 transition-all duration-300 hover:scale-105;
+  }
+
+  .btn-section {
+    @apply glass-button text-white/80 hover:text-yellow-300 hover:bg-yellow-400/15 hover:border-yellow-400/40 font-nav font-medium px-6 py-3 transition-all duration-300;
+  }
+
+  /* Frost variants */
+  .frost-light {
+    @apply backdrop-blur-sm border rounded-2xl;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(0, 0, 0, 0.1) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px) saturate(150%) contrast(1.08);
+    -webkit-backdrop-filter: blur(12px) saturate(150%) contrast(1.08);
+  }
+
+  .frost-medium {
+    @apply backdrop-blur-xl border rounded-2xl;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(0, 0, 0, 0.15) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(24px) saturate(170%) contrast(1.12) brightness(1.06);
+    -webkit-backdrop-filter: blur(24px) saturate(170%) contrast(1.12) brightness(1.06);
+  }
+
+  .frost-heavy {
+    @apply backdrop-blur-3xl border rounded-2xl;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.16) 0%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(0, 0, 0, 0.2) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(40px) saturate(180%) contrast(1.18) brightness(1.1);
+    -webkit-backdrop-filter: blur(40px) saturate(180%) contrast(1.18) brightness(1.1);
+  }
+}
+
+/* Accessibility */
+@media (prefers-contrast: high) {
+  .glass-card, .glass {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-card, .glass {
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(4px) !important;
+  }
+}

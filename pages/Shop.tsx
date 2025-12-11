@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Heart } from 'lucide-react';
 import { Button } from '../components/Button';
 import { useCartStore } from '../lib/store';
-import { MOCK_PRODUCTS } from '../lib/constants';
+import { services } from '../lib/supabase';
+import { Product } from '../types';
 
 export const Shop: React.FC = () => {
   const { addItem } = useCartStore();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const data = await services.shop.getAll();
+      setProducts(data);
+      setLoading(false);
+    };
+    loadProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-charcoal-950 pt-32 flex justify-center">
+        <div className="w-8 h-8 border-2 border-mustard-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-32 pb-20 min-h-screen bg-charcoal-950">
@@ -19,7 +39,7 @@ export const Shop: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {MOCK_PRODUCTS.map((product, idx) => (
+          {products.map((product, idx) => (
             <div 
               key={product.id} 
               className="group glass-card rounded-2xl overflow-hidden flex flex-col h-full hover:border-mustard-500/30 transition-all duration-500 animate-fade-in"

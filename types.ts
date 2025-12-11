@@ -1,90 +1,89 @@
-export type Media = {
+
+export interface Media {
   id: string;
   filename: string;
+  public_url: string;
   storage_path: string;
   bucket_name: string;
-  public_url: string;
-  media_type: string;
-  mime_type?: string | null;
-  file_size?: number | null;
-  width?: number | null;
-  height?: number | null;
-  title?: string | null;
-  description?: string | null;
-  alt_text?: string | null;
-  tags?: string[] | null;
-  page_context?: string | null;
-  is_active?: boolean | null;
-  sort_order?: number | null;
+  title?: string;
+  alt_text?: string;
+  description?: string;
+  tags?: string[];
+  is_active?: boolean;
   created_at: string;
   updated_at: string;
-};
+  // UI helpers
+  width?: number;
+  height?: number;
+  media_type?: string;
+}
 
-export type Essay = {
+export interface Essay {
   id: string;
   title: string;
   slug: string;
-  subtitle?: string | null;
-  excerpt?: string | null;
-  featured_image_id?: string | null;
-  content: string; // TipTap JSON or HTML
-  publish_status: "draft" | "published";
-  is_featured?: boolean | null;
-  tags?: string[] | null;
+  subtitle?: string;
+  excerpt?: string;
+  content: string; // TipTap HTML
+  featured_image_id?: string;
+  featured_image_url?: string;
+  publish_status: 'draft' | 'published';
+  tags?: string[];
   view_count?: number;
   read_time_minutes?: number;
+  published_at?: string;
   created_at: string;
   updated_at: string;
-  published_at?: string | null;
-  // Augmented for UI convenience if needed
-  featured_image_url?: string; 
-};
+  // Joins
+  media_items?: Media; // featured image
+}
 
-export type Product = {
+export interface Product {
   id: string;
   title: string;
   slug: string;
-  description: string;
+  description?: string;
   category: string;
   base_price: number;
-  images: string[]; // Simplification for JSONB
-  variants: any; // JSONB
-  tags: string[];
+  images: string[]; // JSONB -> string[]
+  variants?: any; // JSONB
+  tags?: string[];
   is_active: boolean;
-  is_digital: boolean;
-  inventory_count?: number | null;
-  printful_product_id?: string | null;
-  metadata: Record<string, any>;
+  is_digital?: boolean;
+  metadata?: any;
+  inventory_count?: number;
   created_at: string;
   updated_at: string;
-};
+}
 
-export type LTOOffer = {
+export interface LTOOffer {
   id: string;
   title: string;
   slug: string;
-  description?: string | null;
-  image_url?: string | null;
+  description?: string;
+  image_url?: string;
   status: 'draft' | 'active' | 'completed';
   end_type: 'date' | 'quantity' | 'manual';
-  end_date?: string | null;
-  max_quantity?: number | null;
+  end_date?: string;
+  max_quantity?: number;
   current_quantity: number;
   created_at: string;
   updated_at: string;
-};
+}
 
-export type LTOVariant = {
+export interface LTOVariant {
   id: string;
   offer_id: string;
   name: string;
   price: number;
-  inventory?: number | null;
+  inventory?: number;
   sold: number;
-  printful_variant_id?: string | null;
   created_at: string;
-};
+}
 
-export type CartItem = Product & {
+export interface CartItem {
+  id: string;
+  product: Product;
   quantity: number;
-};
+  variantId?: string;
+}

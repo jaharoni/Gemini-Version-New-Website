@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Artist Portfolio</title>
+    <title>Artist Portfolio & Shop</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono&family=Space+Grotesk:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -79,23 +79,13 @@
                 950: '#161a16',
               }
             },
-            fontFamily: {
-              display: ['Fraunces', 'Playfair Display', 'Georgia', 'serif'],
-              body: ['Inter', 'SF Pro Text', 'system-ui', 'sans-serif'],
-              nav: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
-              accent: ['Crimson Pro', 'Georgia', 'serif'],
-              mono: ['JetBrains Mono', 'Monaco', 'monospace'],
-            },
             animation: {
               'fade-in-up': 'fadeInUp 0.6s ease-out',
               'float': 'float 3s ease-in-out infinite',
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'bounce-slow': 'bounce 3s infinite',
               'glow': 'glow 2s ease-in-out infinite alternate',
               'slide-up': 'slideUp 0.5s ease-out',
               'fade-in': 'fadeIn 0.8s ease-out',
               'micro-float': 'microFloat 0.3s ease-out',
-              'card-shift': 'cardShift 0.4s ease-out',
             },
             keyframes: {
               fadeInUp: {
@@ -123,10 +113,27 @@
                 '0%': { transform: 'translateY(0px) scale(1)' },
                 '100%': { transform: 'translateY(-5px) scale(1.02)' },
               },
-              cardShift: {
-                '0%': { transform: 'translateX(0px) translateY(0px)' },
-                '100%': { transform: 'translateX(2px) translateY(-3px)' },
-              },
+            },
+            fontFamily: {
+              'display': ['Fraunces', 'Playfair Display', 'Georgia', 'serif'],
+              'body': ['Inter', 'SF Pro Text', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+              'nav': ['Space Grotesk', 'Inter', 'SF Pro Display', 'system-ui', 'sans-serif'],
+              'accent': ['Crimson Pro', 'Georgia', 'Times New Roman', 'serif'],
+              'mono': ['JetBrains Mono', 'SF Mono', 'Monaco', 'monospace'],
+            },
+            fontSize: {
+              'xs': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.025em' }],
+              'sm': ['0.875rem', { lineHeight: '1.6', letterSpacing: '0.025em' }],
+              'base': ['1rem', { lineHeight: '1.7', letterSpacing: '0.025em' }],
+              'lg': ['1.125rem', { lineHeight: '1.7', letterSpacing: '0.025em' }],
+              'xl': ['1.25rem', { lineHeight: '1.6', letterSpacing: '0.025em' }],
+              '2xl': ['1.5rem', { lineHeight: '1.5', letterSpacing: '0.025em' }],
+              '3xl': ['1.875rem', { lineHeight: '1.4', letterSpacing: '0.025em' }],
+              '4xl': ['2.25rem', { lineHeight: '1.3', letterSpacing: '0.025em' }],
+              '5xl': ['3rem', { lineHeight: '1.2', letterSpacing: '0.025em' }],
+              '6xl': ['3.75rem', { lineHeight: '1.1', letterSpacing: '0.025em' }],
+              '7xl': ['4.5rem', { lineHeight: '1.1', letterSpacing: '0.025em' }],
+              '8xl': ['6rem', { lineHeight: '1', letterSpacing: '0.025em' }],
             },
             boxShadow: {
               'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
@@ -135,7 +142,6 @@
               'glow': '0 0 20px rgba(212, 160, 23, 0.1)',
               'glow-lg': '0 0 40px rgba(212, 160, 23, 0.15)',
               'float': '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)',
-              '3xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)',
               'glass': '0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06)',
               'glass-hover': '0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08)',
             },
@@ -143,118 +149,26 @@
         },
       }
     </script>
-    
-    <style type="text/tailwindcss">
-      @layer base {
-        body {
-          @apply bg-charcoal-950 text-cream-100 font-body antialiased;
-          overflow-x: hidden;
-        }
-        
-        html {
-          scroll-behavior: smooth;
-          scroll-padding-top: 80px;
-        }
-      }
-
-      /* Custom scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        @apply bg-charcoal-950;
-      }
-      ::-webkit-scrollbar-thumb {
-        @apply bg-mustard-400 rounded-full;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        @apply bg-mustard-300;
-      }
-
-      @layer components {
-        .glass {
-          @apply backdrop-blur-2xl border border-white/25 shadow-2xl;
-          background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.12) 0%,
-            rgba(255, 255, 255, 0.08) 50%,
-            rgba(0, 0, 0, 0.15) 100%);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .glass-card {
-          @apply backdrop-blur-2xl border border-white/30 rounded-2xl shadow-2xl;
-          background: linear-gradient(135deg,
-              rgba(255, 255, 255, 0.14) 0%,
-              rgba(255, 255, 255, 0.1) 50%,
-              rgba(0, 0, 0, 0.18) 100%);
-          box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.35),
-            inset 0 1px 0 rgba(255, 255, 255, 0.25),
-            inset 0 -1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .glass-button {
-          @apply backdrop-blur-xl border border-white/25 rounded-full shadow-lg;
-          background: linear-gradient(135deg,
-              rgba(255, 255, 255, 0.12) 0%,
-              rgba(255, 255, 255, 0.08) 50%,
-              rgba(0, 0, 0, 0.15) 100%);
-          box-shadow:
-            0 4px 16px rgba(0, 0, 0, 0.25),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        
-        .glass-button:hover {
-          @apply transform -translate-y-[1px];
-        }
-
-        .glass-yellow {
-          @apply backdrop-blur-2xl border border-mustard-500/40 rounded-full shadow-lg;
-          background: linear-gradient(135deg,
-              rgba(212, 160, 23, 0.25) 0%,
-              rgba(212, 160, 23, 0.15) 50%,
-              rgba(0, 0, 0, 0.2) 100%);
-          box-shadow:
-            0 4px 24px rgba(212, 160, 23, 0.3),
-            0 2px 8px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.25);
-        }
-
-        .text-hero {
-          @apply font-display text-6xl md:text-8xl font-medium tracking-tight leading-none uppercase;
-        }
-
-        .text-section-title {
-          @apply font-display text-4xl md:text-5xl font-medium tracking-tight leading-tight uppercase;
-        }
-
-        .text-nav {
-          @apply font-nav font-medium tracking-wider uppercase text-sm;
-          font-variant: small-caps;
-          letter-spacing: 0.05em;
-        }
-        
-        .btn-large {
-           @apply glass-button text-white hover:bg-mustard-400/15 hover:border-mustard-400/40 hover:text-mustard-300 font-nav font-medium px-8 py-4 transition-all duration-300 hover:scale-105 tracking-wide hover:shadow-xl;
-        }
-      }
-    </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.1",
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3",
+    "lucide-react": "https://esm.sh/lucide-react@0.344.0",
+    "@google/genai": "https://esm.sh/@google/genai@0.1.1",
+    "zustand": "https://esm.sh/zustand@4.5.2",
+    "zustand/middleware": "https://esm.sh/zustand@4.5.2/middleware",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.8",
     "react-dom/": "https://esm.sh/react-dom@^19.2.1/",
     "react/": "https://esm.sh/react@^19.2.1/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.10.1",
-    "lucide-react": "https://esm.sh/lucide-react@^0.559.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.32.0",
-    "zustand": "https://esm.sh/zustand@^5.0.9",
     "zustand/": "https://esm.sh/zustand@^5.0.9/"
   }
 }
 </script>
-</head>
+  </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

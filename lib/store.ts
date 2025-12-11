@@ -5,9 +5,9 @@ import { CartItem, Product } from '../types';
 interface CartState {
   items: CartItem[];
   isOpen: boolean;
-  addItem: (product: Product) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  addItem: (product: Product, quantity?: number) => void;
+  removeItem: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   toggleCart: () => void;
   clearCart: () => void;
   total: () => number;
@@ -18,18 +18,18 @@ export const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [],
       isOpen: false,
-      addItem: (product) => {
+      addItem: (product, quantity = 1) => {
         set((state) => {
           const existing = state.items.find((i) => i.id === product.id);
           if (existing) {
             return {
               items: state.items.map((i) =>
-                i.id === product.id ? { ...i, quantity: i.quantity + 1 } : i
+                i.id === product.id ? { ...i, quantity: i.quantity + quantity } : i
               ),
               isOpen: true,
             };
           }
-          return { items: [...state.items, { ...product, quantity: 1 }], isOpen: true };
+          return { items: [...state.items, { id: product.id, product, quantity }], isOpen: true };
         });
       },
       removeItem: (id) =>
@@ -43,11 +43,11 @@ export const useCartStore = create<CartState>()(
       toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
       clearCart: () => set({ items: [] }),
       total: () => {
-        return get().items.reduce((acc, item) => acc + item.base_price * item.quantity, 0);
+        return get().items.reduce((acc, item) => acc + item.product.base_price * item.quantity, 0);
       },
     }),
     {
-      name: 'portfolio-cart',
+      name: 'artist-portfolio-cart',
     }
   )
 );

@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
-import { X, ChevronLeft, ChevronRight, Filter, Maximize2 } from 'lucide-react';
-import { MOCK_GALLERY } from '../lib/constants';
+import React, { useState, useEffect } from 'react';
+import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { services } from '../lib/supabase';
 import { Media } from '../types';
 
 export const Gallery: React.FC = () => {
+  const [images, setImages] = useState<Media[]>([]);
   const [filter, setFilter] = useState<string>('All');
   const [selectedImage, setSelectedImage] = useState<Media | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const filters = ['All', 'Oil', 'Digital', 'Sketch'];
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await services.gallery.getAll();
+      setImages(data);
+      setIsLoading(false);
+    };
+    loadData();
+  }, []);
+
+  // Extract unique tags
+  const filters = ['All', ...Array.from(new Set(images.flatMap(img => img.tags || [])))];
   
   const filteredImages = filter === 'All' 
-    ? MOCK_GALLERY 
-    : MOCK_GALLERY.filter(item => item.tags?.includes(filter));
+    ? images 
+    : images.filter(item => item.tags?.includes(filter));
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -29,10 +41,18 @@ export const Gallery: React.FC = () => {
     setSelectedImage(filteredImages[prevIndex]);
   };
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-charcoal-950 pt-32 flex justify-center">
+        <div className="w-8 h-8 border-2 border-mustard-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="pt-32 pb-20 min-h-screen bg-charcoal-950">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 animate-fade-in">
           <div>
             <span className="text-mustard-400 font-nav text-xs tracking-widest uppercase mb-2 block">Portfolio</span>
             <h1 className="text-5xl md:text-7xl font-display text-cream-100">Visual Works</h1>
@@ -56,7 +76,7 @@ export const Gallery: React.FC = () => {
           </div>
         </div>
 
-        {/* Masonry Grid */}
+        {/* Grid */}
         <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
           {filteredImages.map((item, idx) => (
             <div 
@@ -69,6 +89,7 @@ export const Gallery: React.FC = () => {
                 <img 
                   src={item.public_url} 
                   alt={item.title || ''} 
+                  loading="lazy"
                   className="w-full h-auto transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -85,35 +106,35 @@ export const Gallery: React.FC = () => {
         </div>
       </div>
 
-      {/* Lightbox */}
+      {/* Lightbox Modal */}
       {selectedImage && (
         <div 
           className="fixed inset-0 z-[100] bg-charcoal-950/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-8 animate-fade-in"
           onClick={() => setSelectedImage(null)}
         >
           <button 
-            className="absolute top-6 right-6 p-3 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors z-10"
+            className="absolute top-6 right-6 p-3 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors z-20"
             onClick={() => setSelectedImage(null)}
           >
             <X className="w-6 h-6 text-cream-100" />
           </button>
 
           <button 
-            className="absolute left-4 md:left-8 p-4 hover:text-mustard-400 transition-colors hidden md:block z-10"
+            className="absolute left-4 md:left-8 p-4 hover:text-mustard-400 transition-colors hidden md:block z-20"
             onClick={handlePrev}
           >
             <ChevronLeft className="w-10 h-10" />
           </button>
 
           <div 
-            className="relative max-w-7xl max-h-[90vh] flex flex-col md:flex-row glass rounded-xl overflow-hidden shadow-2xl"
+            className="relative w-full max-w-7xl max-h-[90vh] flex flex-col md:flex-row glass rounded-xl overflow-hidden shadow-2xl"
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex-1 bg-black/50 flex items-center justify-center">
+            <div className="flex-1 bg-black/50 flex items-center justify-center relative">
               <img 
                 src={selectedImage.public_url} 
                 alt={selectedImage.title || ''} 
-                className="max-h-[60vh] md:max-h-[90vh] w-auto object-contain"
+                className="max-h-[50vh] md:max-h-[90vh] w-auto object-contain"
               />
             </div>
             
@@ -127,18 +148,18 @@ export const Gallery: React.FC = () => {
               <div className="mt-auto pt-6 border-t border-white/10 grid grid-cols-2 gap-4 text-xs font-mono text-sage-500">
                 <div>
                   <span className="block text-white/40 uppercase mb-1">Dimensions</span>
-                  {selectedImage.width} x {selectedImage.height}
+                  {selectedImage.width ? `${selectedImage.width}px` : 'N/A'}
                 </div>
                 <div>
-                  <span className="block text-white/40 uppercase mb-1">Year</span>
-                  2023
+                  <span className="block text-white/40 uppercase mb-1">Created</span>
+                  {new Date(selectedImage.created_at || Date.now()).getFullYear()}
                 </div>
               </div>
             </div>
           </div>
 
           <button 
-            className="absolute right-4 md:right-8 p-4 hover:text-mustard-400 transition-colors hidden md:block z-10"
+            className="absolute right-4 md:right-8 p-4 hover:text-mustard-400 transition-colors hidden md:block z-20"
             onClick={handleNext}
           >
             <ChevronRight className="w-10 h-10" />

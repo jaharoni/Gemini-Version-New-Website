@@ -36,11 +36,11 @@ export const CartDrawer: React.FC = () => {
             items.map((item) => (
               <div key={item.id} className="glass-card p-4 rounded-xl flex gap-4 animate-fade-in">
                 <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                  <img src={item.images[0]} alt={item.title} className="w-full h-full object-cover" />
+                  <img src={item.product.images[0]} alt={item.product.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 flex flex-col">
                   <div className="flex justify-between items-start">
-                    <h3 className="font-display text-lg text-cream-100 leading-tight">{item.title}</h3>
+                    <h3 className="font-display text-lg text-cream-100 leading-tight">{item.product.title}</h3>
                     <button 
                       onClick={() => removeItem(item.id)}
                       className="text-sage-500 hover:text-red-400 transition-colors p-1"
@@ -48,7 +48,7 @@ export const CartDrawer: React.FC = () => {
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
-                  <p className="text-mustard-400 text-sm font-mono mb-auto">${item.base_price}</p>
+                  <p className="text-mustard-400 text-sm font-mono mb-auto">${item.product.base_price}</p>
                   
                   <div className="flex items-center gap-3 mt-2 bg-white/5 w-fit rounded-lg p-1">
                     <button 

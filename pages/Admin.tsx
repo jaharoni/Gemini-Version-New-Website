@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Image as ImageIcon, ShoppingBag, FileText, Settings, Plus, Search, Edit2, Trash2, Save, Clock, Star } from 'lucide-react';
+import { LayoutDashboard, Image as ImageIcon, ShoppingBag, FileText, Settings, Plus, Search, Edit2, Trash2, Save, Clock } from 'lucide-react';
 import { Button } from '../components/Button';
 import { MOCK_GALLERY, MOCK_PRODUCTS, MOCK_LTO } from '../lib/constants';
 
@@ -35,11 +35,6 @@ export const Admin: React.FC = () => {
           </div>
         ))}
       </div>
-      
-      {/* Chart Placeholder */}
-      <div className="glass-card p-8 h-64 flex items-center justify-center text-sage-500">
-        <p>Analytics Chart Placeholder</p>
-      </div>
     </div>
   );
 
@@ -71,14 +66,6 @@ export const Admin: React.FC = () => {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-display">Products</h2>
         <div className="flex gap-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sage-400" />
-            <input 
-              type="text" 
-              placeholder="Search products..." 
-              className="pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-cream-100 focus:outline-none focus:border-mustard-400"
-            />
-          </div>
           <Button size="sm"><Plus className="w-4 h-4 mr-2" /> Add Product</Button>
         </div>
       </div>
@@ -119,64 +106,6 @@ export const Admin: React.FC = () => {
     </div>
   );
 
-  const renderLTO = () => (
-    <div className="space-y-6 animate-fade-in">
-       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-display">LTO Campaigns</h2>
-        <Button size="sm"><Plus className="w-4 h-4 mr-2" /> New Campaign</Button>
-      </div>
-
-      <div className="grid gap-6">
-        {MOCK_LTO.map(campaign => (
-          <div key={campaign.id} className="glass-card p-6 flex flex-col md:flex-row gap-6 items-center">
-             <img src={campaign.image_url || ''} className="w-24 h-24 object-cover rounded-lg" alt="" />
-             <div className="flex-1">
-               <div className="flex items-center gap-2 mb-2">
-                 <h3 className="text-xl font-display">{campaign.title}</h3>
-                 <span className="px-2 py-0.5 rounded text-xs bg-mustard-500 text-charcoal-950 font-bold uppercase">Active</span>
-               </div>
-               <p className="text-sage-400 text-sm mb-4">{campaign.description}</p>
-               
-               <div className="w-full bg-white/10 rounded-full h-2 mb-2">
-                 <div 
-                   className="bg-mustard-500 h-2 rounded-full" 
-                   style={{ width: `${(campaign.current_quantity / (campaign.max_quantity || 1)) * 100}%` }} 
-                 />
-               </div>
-               <div className="flex justify-between text-xs font-mono text-sage-500">
-                 <span>{campaign.current_quantity} sold</span>
-                 <span>{campaign.max_quantity} total</span>
-               </div>
-             </div>
-             <div className="flex gap-2">
-               <Button variant="secondary" size="sm">Edit</Button>
-               <Button variant="ghost" size="sm"><Trash2 className="w-4 h-4" /></Button>
-             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  const renderSettings = () => (
-    <div className="space-y-6 animate-fade-in max-w-2xl">
-      <h2 className="text-2xl font-display">Site Settings</h2>
-      <div className="glass-card p-8 space-y-6">
-        <div className="space-y-2">
-          <label className="block text-xs font-nav uppercase tracking-wider text-sage-400">Site Title</label>
-          <input type="text" defaultValue="J.D. ARTIST" className="w-full bg-charcoal-950/50 border border-white/10 rounded-lg p-3 text-cream-100 focus:border-mustard-400 outline-none focus:ring-1 focus:ring-mustard-400" />
-        </div>
-        <div className="space-y-2">
-          <label className="block text-xs font-nav uppercase tracking-wider text-sage-400">Contact Email</label>
-          <input type="email" defaultValue="hello@jdartist.com" className="w-full bg-charcoal-950/50 border border-white/10 rounded-lg p-3 text-cream-100 focus:border-mustard-400 outline-none focus:ring-1 focus:ring-mustard-400" />
-        </div>
-        <div className="pt-4 flex justify-end">
-          <Button size="sm"><Save className="w-4 h-4 mr-2" /> Save Changes</Button>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="pt-32 pb-20 min-h-screen bg-charcoal-950">
       <div className="container mx-auto px-6">
@@ -184,7 +113,7 @@ export const Admin: React.FC = () => {
           <h1 className="text-4xl font-display text-cream-100">Dashboard</h1>
           <div className="flex items-center gap-3">
              <div className="text-right hidden md:block">
-               <p className="text-sm font-medium text-cream-100">Admin User</p>
+               <p className="text-sm font-medium text-cream-100">Admin</p>
                <p className="text-xs text-sage-400">admin@jdartist.com</p>
              </div>
              <div className="w-10 h-10 rounded-full bg-mustard-500 text-charcoal-950 flex items-center justify-center font-bold text-lg shadow-glow">JD</div>
@@ -217,14 +146,32 @@ export const Admin: React.FC = () => {
             {currentView === 'overview' && renderOverview()}
             {currentView === 'media' && renderMedia()}
             {currentView === 'products' && renderProducts()}
-            {currentView === 'settings' && renderSettings()}
-            {currentView === 'lto' && renderLTO()}
             {currentView === 'essays' && (
               <div className="glass-card p-12 text-center text-sage-400 flex flex-col items-center">
                 <FileText className="w-16 h-16 mb-4 opacity-20" />
                 <h3 className="text-xl font-display text-cream-100 mb-2">Essays Manager</h3>
-                <p className="max-w-md mx-auto">This module will feature a rich-text editor using TipTap integration for writing and publishing essays.</p>
-                <Button className="mt-6" size="sm">Create Draft</Button>
+                <p className="max-w-md mx-auto mb-6">Create and publish essays using the rich text editor.</p>
+                <Button size="sm">Create New Essay</Button>
+              </div>
+            )}
+            {currentView === 'lto' && (
+              <div className="glass-card p-12 text-center text-sage-400 flex flex-col items-center">
+                <Clock className="w-16 h-16 mb-4 opacity-20" />
+                <h3 className="text-xl font-display text-cream-100 mb-2">LTO Manager</h3>
+                <p className="max-w-md mx-auto mb-6">Manage Limited Time Offers and track campaign performance.</p>
+                <Button size="sm">New Campaign</Button>
+              </div>
+            )}
+            {currentView === 'settings' && (
+              <div className="glass-card p-8">
+                <h3 className="text-xl font-display text-cream-100 mb-6">Settings</h3>
+                <div className="space-y-4 max-w-md">
+                   <div>
+                     <label className="block text-xs font-nav uppercase text-sage-400 mb-2">Site Title</label>
+                     <input className="w-full bg-white/5 border border-white/10 p-3 rounded-lg text-cream-100" defaultValue="J.D. ARTIST" />
+                   </div>
+                   <Button size="sm">Save Changes</Button>
+                </div>
               </div>
             )}
           </div>
