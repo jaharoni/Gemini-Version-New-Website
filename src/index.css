@@ -346,7 +346,7 @@ select:focus-visible,
 
 /* Gallery section navigation buttons */
 .btn-section {
-  @apply bg-white/8 border-white/20 backdrop-blur-xl text-white/80 hover:text-yellow-300 hover:bg-yellow-400/15 hover:border-yellow-400/40 font-nav font-medium px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 tracking-wide shadow-glass hover:shadow-glass-hover small-caps-enhanced;
+  @apply bg-white/10 border-white/20 backdrop-blur-xl text-white/80 hover:text-yellow-300 hover:bg-yellow-400/15 hover:border-yellow-400/40 font-nav font-medium px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 tracking-wide shadow-glass hover:shadow-glass-hover small-caps-enhanced;
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
 }
@@ -449,7 +449,7 @@ select:focus-visible,
 
 /* Input styles using sage for UI elements */
 .input-glass {
-  @apply glass-input text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30 transition-all duration-300 focus:bg-white/8;
+  @apply glass-input text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30 transition-all duration-300 focus:bg-white/10;
 }
 
 /* Form elements for light backgrounds */
@@ -471,7 +471,7 @@ select:focus-visible,
 
 /* Select for dark backgrounds with light text */
 .select-glass-dark {
-  @apply glass-input text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30 transition-all duration-300 focus:bg-white/8 cursor-pointer;
+  @apply glass-input text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30 transition-all duration-300 focus:bg-white/10 cursor-pointer;
 }
 
 .select-glass-dark option {
@@ -613,7 +613,7 @@ select:focus-visible,
 }
 
 .search-enhanced:focus-within {
-  @apply border-yellow-400/50 bg-yellow-400/8;
+  @apply border-yellow-400/50 bg-yellow-400/10;
   box-shadow:
     0 16px 64px rgba(0, 0, 0, 0.16),
     0 4px 16px rgba(0, 0, 0, 0.12),
@@ -629,11 +629,11 @@ select:focus-visible,
 }
 
 .glass-input-enhanced:hover {
-  @apply border-yellow-400/20 bg-yellow-400/3;
+  @apply border-yellow-400/20 bg-yellow-400/5;
 }
 
 .glass-input-enhanced:focus {
-  @apply border-yellow-400/40 bg-yellow-400/5;
+  @apply border-yellow-400/40 bg-yellow-400/10;
   @apply shadow-glass-hover;
   backdrop-filter: blur(28px) saturate(150%);
   -webkit-backdrop-filter: blur(28px) saturate(150%);
@@ -673,7 +673,7 @@ select:focus-visible,
 }
 
 .glass-content {
-  @apply bg-white/8 backdrop-blur-md rounded-lg p-4 border border-white/15;
+  @apply bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/15;
   backdrop-filter: blur(16px) saturate(110%) contrast(1.15) brightness(1.05);
   -webkit-backdrop-filter: blur(16px) saturate(110%) contrast(1.15) brightness(1.05);
   background: linear-gradient(135deg,
@@ -707,7 +707,7 @@ select:focus-visible,
 }
 
 .glass-item {
-  @apply bg-white/2 backdrop-blur-sm rounded-lg p-3 border border-white/5;
+  @apply bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/5;
   backdrop-filter: blur(8px) saturate(105%);
   -webkit-backdrop-filter: blur(8px) saturate(105%);
 }
