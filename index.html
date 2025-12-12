@@ -3,65 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Justin Aharoni - Visual Storyteller. Photography portfolio, essays, and prints." />
     <title>Justin Aharoni - Visual Storyteller</title>
-    
-    <!-- Polyfill for process.env -->
-    <script>
-      window.process = {
-        env: {
-          NODE_ENV: 'development',
-          API_KEY: '',
-          VITE_SUPABASE_URL: 'https://placeholder.supabase.co',
-          VITE_SUPABASE_ANON_KEY: 'placeholder'
-        }
-      };
-    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono&family=Space+Grotesk:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Config -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              mustard: { 50: '#fefbf3', 100: '#fdf4d3', 200: '#fae8a6', 300: '#f6d76e', 400: '#f0c043', 500: '#d4a017', 600: '#b8841a', 700: '#9a6b1a', 800: '#7f561c', 900: '#6b471b' },
-              charcoal: { 50: '#f7f7f6', 100: '#e4e4e1', 200: '#c9c9c3', 300: '#a8a89f', 400: '#87877a', 500: '#6c6c5f', 600: '#55554b', 700: '#46463e', 800: '#3a3a34', 900: '#2d2d28', 950: '#1a1a17' },
-              cream: { 50: '#fefefe', 100: '#fefcf8', 200: '#fdf8ed', 300: '#fbf2dc', 400: '#f7e6c1', 500: '#f1d49e', 600: '#e8c078', 700: '#dca855', 800: '#c8934a', 900: '#a67c42' },
-              sage: { 50: '#f7f8f7', 100: '#e8ebe8', 200: '#d1d7d1', 300: '#b0bbb0', 400: '#8a9a8a', 500: '#6d7d6d', 600: '#576357', 700: '#485148', 800: '#3c433c', 900: '#343834' },
-              forest: { 50: '#f6f7f6', 100: '#e1e4e1', 200: '#c3c9c3', 300: '#9ea79e', 400: '#7a857a', 500: '#5f6b5f', 600: '#4a554a', 700: '#3d453d', 800: '#333933', 900: '#2b302b', 950: '#161a16' }
-            },
-            animation: { 'fade-in-up': 'fadeInUp 0.6s ease-out', 'float': 'float 3s ease-in-out infinite', 'glow': 'glow 2s ease-in-out infinite alternate', 'slide-up': 'slideUp 0.5s ease-out', 'fade-in': 'fadeIn 0.8s ease-out', 'micro-float': 'microFloat 0.3s ease-out' },
-            keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }, float: { '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' }, '33%': { transform: 'translateY(-10px) rotate(120deg)' }, '66%': { transform: 'translateY(5px) rotate(240deg)' } }, glow: { '0%': { boxShadow: '0 0 20px rgba(212, 160, 23, 0.1)' }, '100%': { boxShadow: '0 0 40px rgba(212, 160, 23, 0.2)' } }, slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }, fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } }, microFloat: { '0%': { transform: 'translateY(0px) scale(1)' }, '100%': { transform: 'translateY(-5px) scale(1.02)' } } },
-            fontFamily: { 'display': ['Fraunces', 'Playfair Display', 'Georgia', 'serif'], 'body': ['Inter', 'SF Pro Text', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'], 'nav': ['Space Grotesk', 'Inter', 'SF Pro Display', 'system-ui', 'sans-serif'], 'accent': ['Crimson Pro', 'Georgia', 'Times New Roman', 'serif'], 'mono': ['JetBrains Mono', 'SF Mono', 'Monaco', 'monospace'] },
-            boxShadow: { 'glow': '0 0 20px rgba(212, 160, 23, 0.1)', 'glow-lg': '0 0 40px rgba(212, 160, 23, 0.15)', 'glass': '0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06)', 'glass-hover': '0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08)' }
-          }
-        }
-      }
-    </script>
-    
-    <!-- Import Map - REACT 18 ONLY, ZUSTAND 4 ONLY -->
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?deps=react@18.3.1,react-dom@18.3.1",
-    "lucide-react": "https://esm.sh/lucide-react@0.344.0?deps=react@18.3.1",
-    "zustand": "https://esm.sh/zustand@4.5.2?deps=react@18.3.1",
-    "zustand/middleware": "https://esm.sh/zustand@4.5.2/middleware?deps=react@18.3.1",
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.8",
-    "@google/genai": "https://esm.sh/@google/genai@0.1.1"
-  }
-}
-</script>
   </head>
   <body>
     <div id="root"></div>
