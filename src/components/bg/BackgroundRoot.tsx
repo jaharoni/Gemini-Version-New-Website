@@ -22,10 +22,12 @@ export function BackgroundRoot() {
   const transitionToImage = (url: string) => {
     if (url === currentImage || url === nextImage) return;
 
+    // Preload in background without blocking transition
     backgroundService.preload(url).catch(() => {});
 
     if (abortControllerRef.current?.signal.aborted) return;
 
+    // Start transition immediately
     setNextImage(url);
     setIsTransitioning(true);
   };
@@ -56,10 +58,40 @@ export function BackgroundRoot() {
     }
   };
 
+  const navigateToPrev = async () => {
+    if (currentUrlsRef.current.length <= 1) return;
+
+    if (carouselIntervalRef.current) {
+      clearInterval(carouselIntervalRef.current);
+      carouselIntervalRef.current = null;
+    }
+
+    currentIndexRef.current = (currentIndexRef.current - 1 + currentUrlsRef.current.length) % currentUrlsRef.current.length;
+    const prevUrl = currentUrlsRef.current[currentIndexRef.current];
+
+    transitionToImage(prevUrl);
+
+    if (carouselEnabledRef.current) {
+      startCarousel();
+    }
+  };
+
+  const preloadCarouselImages = () => {
+    if (currentUrlsRef.current.length <= 1) return;
+
+    const nextIndex = (currentIndexRef.current + 1) % currentUrlsRef.current.length;
+    const nextNextIndex = (currentIndexRef.current + 2) % currentUrlsRef.current.length;
+
+    backgroundService.preload(currentUrlsRef.current[nextIndex]).catch(() => {});
+    backgroundService.preload(currentUrlsRef.current[nextNextIndex]).catch(() => {});
+  };
+
   const startCarousel = () => {
     if (carouselIntervalRef.current) {
       clearInterval(carouselIntervalRef.current);
     }
+
+    preloadCarouselImages();
 
     carouselIntervalRef.current = setInterval(async () => {
       if (currentUrlsRef.current.length <= 1) return;
@@ -68,8 +100,22 @@ export function BackgroundRoot() {
       const nextUrl = currentUrlsRef.current[currentIndexRef.current];
 
       transitionToImage(nextUrl);
+      preloadCarouselImages();
     }, carouselIntervalMsRef.current);
   };
+
+  useEffect(() => {
+    const handleNext = () => navigateToNext();
+    const handlePrev = () => navigateToPrev();
+
+    window.addEventListener('backgroundNext', handleNext);
+    window.addEventListener('backgroundPrev', handlePrev);
+
+    return () => {
+      window.removeEventListener('backgroundNext', handleNext);
+      window.removeEventListener('backgroundPrev', handlePrev);
+    };
+  }, []);
 
   useEffect(() => {
     const pageKey = location.pathname.slice(1) || 'home';
@@ -110,27 +156,34 @@ export function BackgroundRoot() {
         currentIndexRef.current = randomIndex;
         const selectedUrl = resolved.urls[randomIndex];
 
+        // Skip if same image and not a page change
         if (selectedUrl === currentImage && !pageChanged) {
           return;
         }
 
         if (!currentImage || pageChanged) {
+          // Check if image is already preloaded
           const isPreloaded = backgroundService.isPreloaded(selectedUrl);
 
           if (isPreloaded) {
+            // If already cached, set immediately
             setCurrentImage(selectedUrl);
             setIsLoading(false);
           } else {
+            // Start preload and use transition for smoother effect
             backgroundService.preload(selectedUrl).catch(() => {});
 
+            // Use transition to the new image
             if (currentImage) {
               transitionToImage(selectedUrl);
             } else {
+              // First load - set immediately and let browser load
               setCurrentImage(selectedUrl);
               setIsLoading(false);
             }
           }
         } else {
+          // Same page, different image - use transition
           transitionToImage(selectedUrl);
         }
 
@@ -186,6 +239,11 @@ export function BackgroundRoot() {
         {isLoading && (
           <div className="fixed inset-0 flex items-center justify-center">
             <div className="w-8 h-8 border-4 border-white/20 border-t-white/80 rounded-full animate-spin" />
+          </div>
+        )}
+        {hasError && (
+          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-red-900/50 text-white px-4 py-2 rounded-lg text-sm z-50">
+            No background images configured. Check console for details.
           </div>
         )}
       </div>

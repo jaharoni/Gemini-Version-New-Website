@@ -124,6 +124,7 @@ class BackgroundService {
   async prefetchForPage(urls: string[]): Promise<void> {
     if (urls.length === 0) return;
 
+    // Preload the first 3 images eagerly
     const priorityUrls = urls.slice(0, 3);
     Promise.all(priorityUrls.map(url => this.preload(url).catch(() => {})));
   }
