@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
 import { Button } from './Button';
 
@@ -36,16 +36,14 @@ export const ChatWidget: React.FC = () => {
       const apiKey = process.env.API_KEY;
       
       if (apiKey) {
-         const ai = new GoogleGenAI({ apiKey });
-         const response = await ai.models.generateContent({
-           model: 'gemini-2.5-flash',
-           contents: input,
-           config: {
-             systemInstruction: "You are a helpful assistant for an artist's portfolio website. You are polite, creative, and knowledgeable about art.",
-           }
-         });
+         const genAI = new GoogleGenerativeAI(apiKey);
+         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
          
-         setMessages(prev => [...prev, { role: 'model', text: response.text || "I couldn't generate a response." }]);
+         const result = await model.generateContent(input);
+         const response = await result.response;
+         const text = response.text();
+         
+         setMessages(prev => [...prev, { role: 'model', text: text || "I couldn't generate a response." }]);
       } else {
         // Fallback for Demo without API Key
         await new Promise(resolve => setTimeout(resolve, 1000));
