@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Calendar, Clock, ArrowRight, Tag } from 'lucide-react';
 import { services } from '../lib/supabase';
 import { Essay } from '../types';
@@ -43,13 +43,13 @@ export const Essays: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
                 <div className="md:col-span-4">
                   {(essay.media_items?.public_url || essay.featured_image_url) && (
-                    <div className="aspect-[4/3] rounded-lg overflow-hidden mb-6 border border-white/10 shadow-lg">
+                    <Link to={`/essays/${essay.slug}`} className="block aspect-[4/3] rounded-lg overflow-hidden mb-6 border border-white/10 shadow-lg">
                       <img 
                         src={essay.media_items?.public_url || essay.featured_image_url} 
                         alt={essay.title} 
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                       />
-                    </div>
+                    </Link>
                   )}
                   <div className="flex flex-wrap gap-2">
                     {essay.tags?.map(tag => (
@@ -67,9 +67,12 @@ export const Essays: React.FC = () => {
                     <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {essay.read_time_minutes || 5} min read</span>
                   </div>
                   
-                  <h2 className="text-3xl md:text-4xl font-display text-cream-100 mb-2 group-hover:text-mustard-300 transition-colors">
-                    {essay.title}
-                  </h2>
+                  <Link to={`/essays/${essay.slug}`} className="block">
+                    <h2 className="text-3xl md:text-4xl font-display text-cream-100 mb-2 group-hover:text-mustard-300 transition-colors">
+                      {essay.title}
+                    </h2>
+                  </Link>
+                  
                   {essay.subtitle && (
                     <h3 className="text-xl font-display text-sage-400 mb-4 italic font-light">{essay.subtitle}</h3>
                   )}
@@ -78,9 +81,9 @@ export const Essays: React.FC = () => {
                     {essay.excerpt}
                   </p>
                   
-                  <button className="flex items-center gap-2 text-cream-100 font-nav uppercase text-xs tracking-widest group-hover:text-mustard-400 transition-colors border-b border-transparent group-hover:border-mustard-400 pb-1">
+                  <Link to={`/essays/${essay.slug}`} className="flex items-center gap-2 text-cream-100 font-nav uppercase text-xs tracking-widest group-hover:text-mustard-400 transition-colors border-b border-transparent group-hover:border-mustard-400 pb-1 w-fit">
                     Read Essay <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </article>

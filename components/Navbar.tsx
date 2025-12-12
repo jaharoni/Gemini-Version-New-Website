@@ -1,127 +1,93 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingCart } from 'lucide-react';
+import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useCartStore } from '../lib/store';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { toggleCart, items } = useCartStore();
   const location = useLocation();
-  const cartItems = useCartStore((state) => state.items);
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/gallery', label: 'Gallery' },
-    { path: '/essays', label: 'Essays' },
-    { path: '/shop', label: 'Shop' },
-    { path: '/contact', label: 'Contact' },
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'Essays', path: '/essays' },
+    { name: 'Shop', path: '/shop' },
+    { name: 'About', path: '/about' },
   ];
 
-  const isActive = (path: string) => {
-    if (path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(path);
-  };
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'glass shadow-2xl border-b border-white/20'
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-mustard-400 to-mustard-600 flex items-center justify-center shadow-glow group-hover:shadow-glow-lg transition-all">
-                <span className="font-display text-charcoal-950 font-bold text-xl">JA</span>
-              </div>
-              <span className="font-nav text-cream-100 text-lg tracking-wider uppercase hidden md:block group-hover:text-mustard-300 transition-colors">
-                Justin Aharoni
-              </span>
-            </Link>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'py-4' : 'py-6'}`}>
+      <div className="container mx-auto px-6">
+        <div className={`glass rounded-2xl px-6 py-4 flex items-center justify-between transition-all duration-300 ${isScrolled ? 'bg-charcoal-950/80' : ''}`}>
+          
+          <Link to="/" className="text-2xl font-display font-semibold tracking-tight text-mustard-500">
+            J.D. ARTIST
+          </Link>
 
-            <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`text-nav transition-all duration-300 pb-1 border-b-2 ${
-                    isActive(link.path)
-                      ? 'text-mustard-400 border-mustard-400'
-                      : 'text-cream-100/80 border-transparent hover:text-mustard-300 hover:border-mustard-300/50'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              
-              <Link
-                to="/shop"
-                className="relative glass-button px-4 py-2 text-cream-100 hover:text-mustard-300 transition-colors flex items-center gap-2"
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.path}
+                to={link.path} 
+                className={`font-nav uppercase text-sm tracking-wider hover:text-mustard-400 transition-colors ${isActive(link.path) ? 'text-mustard-400' : 'text-cream-200'}`}
               >
-                <ShoppingCart className="w-5 h-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-mustard-500 text-charcoal-950 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-glow">
-                    {cartCount}
-                  </span>
-                )}
+                {link.name}
               </Link>
-            </div>
+            ))}
+          </div>
 
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden glass-button p-3 text-cream-100"
-              aria-label="Toggle menu"
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={toggleCart}
+              className="relative p-2 hover:bg-white/10 rounded-full transition-colors group"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <ShoppingBag className="w-5 h-5 text-cream-100 group-hover:text-mustard-400" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-mustard-500 text-charcoal-950 text-xs font-bold rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+            
+            <button 
+              className="md:hidden p-2 hover:bg-white/10 rounded-full"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
-      </nav>
+      </div>
 
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 md:hidden animate-fade-in">
-          <div
-            className="absolute inset-0 bg-charcoal-950/95 backdrop-blur-xl"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-          <div className="relative h-full flex flex-col items-center justify-center gap-8 p-8">
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 p-6">
+          <div className="glass rounded-xl p-6 flex flex-col gap-4">
             {navLinks.map((link) => (
-              <Link
+              <Link 
                 key={link.path}
                 to={link.path}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-2xl font-nav transition-colors ${
-                  isActive(link.path)
-                    ? 'text-mustard-400'
-                    : 'text-cream-100 hover:text-mustard-300'
-                }`}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`font-nav text-lg py-2 border-b border-white/10 ${isActive(link.path) ? 'text-mustard-400' : 'text-cream-200'}`}
               >
-                {link.label}
+                {link.name}
               </Link>
             ))}
-            <Link
-              to="/shop"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="glass-yellow px-8 py-4 text-charcoal-950 font-nav flex items-center gap-3 mt-4"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              Cart ({cartCount})
-            </Link>
           </div>
         </div>
       )}
-    </>
+    </nav>
   );
 };

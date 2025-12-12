@@ -41,5 +41,9 @@ export const services = {
   },
   shop: {
     getAll: () => fetchData('printful_products', MOCK_PRODUCTS),
+    getBySlug: async (slug: string) => {
+      const all = await fetchData('printful_products', MOCK_PRODUCTS);
+      return all.find(p => p.slug === slug);
+    }
   }
 };

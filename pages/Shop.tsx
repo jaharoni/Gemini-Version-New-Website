@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Heart } from 'lucide-react';
 import { Button } from '../components/Button';
 import { useCartStore } from '../lib/store';
 import { services } from '../lib/supabase';
@@ -46,28 +47,34 @@ export const Shop: React.FC = () => {
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
               <div className="relative aspect-square overflow-hidden">
-                <img 
-                  src={product.images[0]} 
-                  alt={product.title} 
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
-                />
+                <Link to={`/shop/${product.slug}`}>
+                  <img 
+                    src={product.images[0]} 
+                    alt={product.title} 
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                  />
+                </Link>
                 <button className="absolute top-4 right-4 p-2 bg-charcoal-950/60 backdrop-blur rounded-full text-white/70 hover:text-red-400 hover:bg-charcoal-950 transition-colors z-10">
                   <Heart className="w-4 h-4" />
                 </button>
                 {product.category === 'Originals' && (
-                  <span className="absolute bottom-4 left-4 px-3 py-1 bg-mustard-500 text-charcoal-950 text-xs font-bold uppercase tracking-wider rounded-sm shadow-lg">
+                  <span className="absolute bottom-4 left-4 px-3 py-1 bg-mustard-500 text-charcoal-950 text-xs font-bold uppercase tracking-wider rounded-sm shadow-lg pointer-events-none">
                     Original
                   </span>
                 )}
                 {/* Quick Add Overlay */}
-                <div className="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                   <Button size="sm" onClick={() => addItem(product)}>Quick Add</Button>
+                <div className="absolute inset-0 bg-charcoal-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                   <div className="pointer-events-auto">
+                     <Button size="sm" onClick={() => addItem(product)}>Quick Add</Button>
+                   </div>
                 </div>
               </div>
               
               <div className="p-6 flex flex-col flex-1 bg-charcoal-950/40">
                 <div className="mb-4">
-                  <h3 className="text-xl font-display text-cream-100 mb-1 group-hover:text-mustard-300 transition-colors">{product.title}</h3>
+                  <Link to={`/shop/${product.slug}`}>
+                    <h3 className="text-xl font-display text-cream-100 mb-1 group-hover:text-mustard-300 transition-colors">{product.title}</h3>
+                  </Link>
                   <p className="text-sage-500 text-sm mb-4 line-clamp-2">{product.description}</p>
                 </div>
                 

@@ -149,20 +149,120 @@
         },
       }
     </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply bg-charcoal-950 text-cream-100 font-body antialiased;
+        }
+        html {
+          scroll-behavior: smooth;
+          scroll-padding-top: 80px;
+        }
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        @apply bg-black;
+      }
+      ::-webkit-scrollbar-thumb {
+        @apply bg-yellow-400 rounded-full;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        @apply bg-yellow-300;
+      }
+
+      @layer components {
+        .glass {
+          @apply backdrop-blur-2xl border shadow-2xl;
+          background: linear-gradient(135deg,
+              rgba(255, 255, 255, 0.12) 0%,
+              rgba(255, 255, 255, 0.08) 50%,
+              rgba(0, 0, 0, 0.15) 100%);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card {
+          @apply backdrop-blur-2xl border rounded-2xl shadow-2xl;
+          background: linear-gradient(135deg,
+              rgba(255, 255, 255, 0.14) 0%,
+              rgba(255, 255, 255, 0.1) 50%,
+              rgba(0, 0, 0, 0.18) 100%);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.35),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .glass-button {
+          @apply backdrop-blur-xl border rounded-full shadow-lg;
+          background: linear-gradient(135deg,
+              rgba(255, 255, 255, 0.12) 0%,
+              rgba(255, 255, 255, 0.08) 50%,
+              rgba(0, 0, 0, 0.15) 100%);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          box-shadow:
+            0 4px 16px rgba(0, 0, 0, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-yellow {
+          @apply backdrop-blur-2xl border rounded-full shadow-lg;
+          background: linear-gradient(135deg,
+              rgba(255, 193, 7, 0.25) 0%,
+              rgba(255, 193, 7, 0.15) 50%,
+              rgba(0, 0, 0, 0.2) 100%);
+          border: 1px solid rgba(255, 193, 7, 0.4);
+          box-shadow:
+            0 4px 24px rgba(255, 193, 7, 0.3),
+            0 2px 8px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .text-hero {
+          @apply font-display text-6xl md:text-8xl font-medium tracking-tight leading-none uppercase;
+        }
+
+        .text-section-title {
+          @apply font-display text-4xl md:text-5xl font-medium tracking-tight leading-tight uppercase;
+        }
+
+        .text-nav {
+          @apply font-nav font-medium tracking-wider uppercase text-sm;
+          font-variant: small-caps;
+          letter-spacing: 0.05em;
+        }
+
+        .text-body {
+          @apply font-body leading-relaxed;
+          line-height: 1.7;
+          letter-spacing: 0.015em;
+        }
+        
+        .btn-large {
+           @apply glass-button text-white hover:bg-mustard-400/15 hover:border-mustard-400/40 hover:text-mustard-300 font-nav font-medium px-8 py-4 transition-all duration-300 hover:scale-105 tracking-wide hover:shadow-xl;
+        }
+      }
+    </style>
     <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@18.3.1",
-    "react/": "https://esm.sh/react@18.3.1/",
     "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "react-dom/": "https://esm.sh/react-dom@18.3.1/",
     "react-router-dom": "https://esm.sh/react-router-dom@6.22.3",
     "lucide-react": "https://esm.sh/lucide-react@0.344.0",
+    "@google/genai": "https://esm.sh/@google/genai@0.1.1",
     "zustand": "https://esm.sh/zustand@4.5.2",
-    "zustand/": "https://esm.sh/zustand@4.5.2/",
     "zustand/middleware": "https://esm.sh/zustand@4.5.2/middleware",
     "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.8",
-    "@google/genai": "https://esm.sh/@google/genai@0.1.1"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "zustand/": "https://esm.sh/zustand@^5.0.9/",
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
